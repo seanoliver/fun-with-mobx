@@ -1,13 +1,31 @@
+'use client';
+
 import React from 'react';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '@/stores/StoreContext';
+interface TodoListProps {}
 
-interface TodoListProps {
+export const TodoList = observer(({}: TodoListProps) => {
+	const { todoStore } = useStore();
 
-}
-
-export const TodoList = ({ }: TodoListProps) => {
-  return (
-    <div>
-      TodoList component
-    </div>
-  );
-};
+	return (
+		<div>
+			<div>
+				<span>{todoStore.completedTodosCount} completed</span>
+				<span> | </span>
+				<span>{todoStore.pendingTodosCount} pending</span>
+			</div>
+			<div>
+				{todoStore.todos.map(todo => (
+					<div key={todo.id}>
+						<input
+							type='checkbox'
+							checked={todo.completed}
+							onChange={() => todoStore.toggleTodo(todo.id)}
+						/>
+					</div>
+				))}
+			</div>
+		</div>
+	);
+});

@@ -1,7 +1,7 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 import { v4 as uuidv4 } from 'uuid';
 
-interface Todo {
+export interface Todo {
 	id: string;
 	text: string;
 	completed: boolean;
@@ -14,6 +14,7 @@ class TodoStore {
 		makeObservable(this, {
 			todos: observable,
 			addTodo: action,
+			updateTodo: action,
 			toggleTodo: action,
 			removeTodo: action,
 			completedTodosCount: computed,
@@ -27,6 +28,13 @@ class TodoStore {
 			text,
 			completed: false,
 		});
+	}
+
+	updateTodo(id: string, text: string) {
+		const todo = this.todos.find(todo => todo.id === id);
+		if (todo) {
+			todo.text = text;
+		}
 	}
 
 	toggleTodo(id: string) {
