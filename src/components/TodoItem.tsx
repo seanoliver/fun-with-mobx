@@ -25,7 +25,7 @@ export const TodoItem = observer(({ todo }: TodoItemProps) => {
 			)}
 			<Checkbox
 				checked={todo.completed}
-				onChange={() => todoStore.toggleTodo(todo.id)}
+				onCheckedChange={() => todoStore.toggleTodo(todo.id)}
 			/>
 			<Button onClick={() => setIsEditing(!isEditing)}>
 				{isEditing ? 'Save' : 'Edit'}

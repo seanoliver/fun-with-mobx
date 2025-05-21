@@ -39,6 +39,7 @@ class TodoStore {
 
 	toggleTodo(id: string) {
 		const todo = this.todos.find(todo => todo.id === id);
+		console.log('toggleTodo', todo);
 		if (todo) {
 			todo.completed = !todo.completed;
 		}

@@ -3,6 +3,9 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '@/stores/StoreContext';
+import { TodoItem } from './TodoItem';
+import { AddTodo } from './AddTodo';
+
 interface TodoListProps {}
 
 export const TodoList = observer(({}: TodoListProps) => {
@@ -16,14 +19,12 @@ export const TodoList = observer(({}: TodoListProps) => {
 				<span>{todoStore.pendingTodosCount} pending</span>
 			</div>
 			<div>
+				<AddTodo />
 				{todoStore.todos.map(todo => (
-					<div key={todo.id}>
-						<input
-							type='checkbox'
-							checked={todo.completed}
-							onChange={() => todoStore.toggleTodo(todo.id)}
-						/>
-					</div>
+					<TodoItem
+						key={todo.id}
+						todo={todo}
+					/>
 				))}
 			</div>
 		</div>
