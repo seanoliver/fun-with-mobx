@@ -16,7 +16,7 @@ const assignVariantN = <T extends readonly string[]>(
   const hash = simpleHash(`${userId}-${testId}`);
 	const mod = hash % variants.length;
 
-	return variants[mod];
+	return VARIANTS[mod];
 };
 
 const simpleHash = (str: string): number => {
