@@ -19,7 +19,20 @@ class TodoStore {
 			removeTodo: action,
 			completedTodosCount: computed,
 			pendingTodosCount: computed,
+			loadTodos: action,
+			saveTodos: action,
 		});
+	}
+
+	loadTodos() {
+		const todos = localStorage.getItem('todos');
+		if (todos) {
+			this.todos = JSON.parse(todos);
+		}
+	}
+
+	saveTodos() {
+		localStorage.setItem('todos', JSON.stringify(this.todos));
 	}
 
 	addTodo(text: string) {
@@ -28,6 +41,7 @@ class TodoStore {
 			text,
 			completed: false,
 		});
+		this.saveTodos();
 	}
 
 	updateTodo(id: string, text: string) {
@@ -35,6 +49,7 @@ class TodoStore {
 		if (todo) {
 			todo.text = text;
 		}
+		this.saveTodos();
 	}
 
 	toggleTodo(id: string) {
@@ -42,10 +57,12 @@ class TodoStore {
 		if (todo) {
 			todo.completed = !todo.completed;
 		}
+		this.saveTodos();
 	}
 
 	removeTodo(id: string) {
 		this.todos = this.todos.filter(todo => todo.id !== id);
+		this.saveTodos();
 	}
 
 	get completedTodosCount() {

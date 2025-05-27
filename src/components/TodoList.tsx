@@ -5,20 +5,25 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '@/stores/StoreContext';
 import { TodoItem } from './TodoItem';
 import { AddTodo } from './AddTodo';
+import { Tooltip } from './Tooltip';
 
 interface TodoListProps {}
 
 export const TodoList = observer(({}: TodoListProps) => {
 	const { todoStore } = useStore();
 
+	const hasCompletedTodos = todoStore.completedTodosCount > 0;
+
 	return (
 		<div>
 			<div>
-				<span>{todoStore.completedTodosCount} completed</span>
+				<Tooltip active={hasCompletedTodos}>
+					<span>{todoStore.completedTodosCount} completed</span>
+				</Tooltip>
 				<span> | </span>
 				<span>{todoStore.pendingTodosCount} pending</span>
 			</div>
-			<div>
+			<div className='flex flex-col gap-2 p-4 justify-start items-start'>
 				<AddTodo />
 				{todoStore.todos.map(todo => (
 					<TodoItem

@@ -9,20 +9,24 @@ export const AddTodo = observer(({}: AddTodoProps) => {
 	const { todoStore } = useStore();
 	const [newTodoText, setNewTodoText] = useState('');
 
-  const handleAddTodo = () => {
+	const handleAddTodo = () => {
 		if (newTodoText.trim()) {
 			todoStore.addTodo(newTodoText);
 			setNewTodoText('');
 		}
 	};
 
-  return (
+	return (
 		<div className='flex flex-row gap-2'>
 			<Input
 				value={newTodoText}
 				onChange={e => setNewTodoText(e.target.value)}
 			/>
-			<Button onClick={handleAddTodo}>Add</Button>
+			<Button
+				onClick={handleAddTodo}
+				className='cursor-pointer'>
+				Add
+			</Button>
 		</div>
 	);
 });

@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useEffect } from 'react';
 import TodoStore from './TodoStore';
 
 const StoreContext = createContext<{
@@ -9,6 +9,10 @@ const StoreContext = createContext<{
 
 export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
 	const todoStore = new TodoStore();
+
+	useEffect(() => {
+		todoStore.loadTodos();
+	}, []);
 
 	return (
 		<StoreContext.Provider value={{ todoStore }}>

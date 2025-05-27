@@ -14,23 +14,37 @@ export const TodoItem = observer(({ todo }: TodoItemProps) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const { todoStore } = useStore();
 	return (
-		<div className='flex flex-row gap-2'>
-			{isEditing ? (
-				<Input
-					value={todo.text}
-					onChange={e => todoStore.updateTodo(todo.id, e.target.value)}
+		<div className='flex flex-row gap-2 py-4 justify-between items-center min-w-[500px]'>
+			<div className='flex flex-row gap-2 items-center'>
+				{isEditing ? (
+					<Input
+						value={todo.text}
+						onChange={e => todoStore.updateTodo(todo.id, e.target.value)}
+					/>
+				) : (
+					<span className={todo.completed ? 'line-through' : ''}>
+						{todo.text}
+					</span>
+				)}
+			</div>
+			<div className='flex flex-row gap-2 items-center'>
+				<Checkbox
+					checked={todo.completed}
+					onCheckedChange={() => todoStore.toggleTodo(todo.id)}
 				/>
-			) : (
-				<span>{todo.text}</span>
-			)}
-			<Checkbox
-				checked={todo.completed}
-				onCheckedChange={() => todoStore.toggleTodo(todo.id)}
-			/>
-			<Button onClick={() => setIsEditing(!isEditing)}>
-				{isEditing ? 'Save' : 'Edit'}
-			</Button>
-			<Button onClick={() => todoStore.removeTodo(todo.id)}>Delete</Button>
+				<Button
+					onClick={() => setIsEditing(!isEditing)}
+					variant='outline'
+					className='cursor-pointer'>
+					{isEditing ? 'Save' : 'Edit'}
+				</Button>
+				<Button
+					onClick={() => todoStore.removeTodo(todo.id)}
+					variant='outline'
+					className='bg-red-500 text-white hover:bg-red-600 hover:text-white cursor-pointer'>
+					Delete
+				</Button>
+			</div>
 		</div>
 	);
 });
